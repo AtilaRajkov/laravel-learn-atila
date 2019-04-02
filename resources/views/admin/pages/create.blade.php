@@ -44,7 +44,7 @@
 
                     <!--MOJ IMAGE-->
                     <div class="custom-file">
-                        <input type="file" name='image' class="custom-file-input" id="image-upload" required>
+                        <input type="file" name='image' class="custom-file-input" id="image-upload">
                         <label class="custom-file-label" for="image-upload">Image *</label>
                         @if($errors->has('image'))
                         <div class='text text-danger'>
