@@ -51,8 +51,8 @@
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="/admin/assets/buttons.html">Preview all</a>
-                            <a class="collapse-item" href="/admin/assets/cards.html">Add new</a>
+                            <a class="collapse-item" href="{{ route('pages.index') }}">Preview all</a>
+                            <a class="collapse-item" href="{{ route('pages.create') }}">Add new</a>
                         </div>
                     </div>
                 </li>
