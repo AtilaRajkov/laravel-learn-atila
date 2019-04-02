@@ -152,6 +152,24 @@
                         </div>
                         @endif
                     </div>
+                    
+                    <!--ACTIVE -->
+                    <div class="form-group">
+                        <label class="mr-5">Active</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="active" id="active-radio-1" value="0" {{ (old('active', 0)) == 0 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="active-radio-1">No</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="active" id="active-radio-2" value="1" {{ (old('active')) == 1 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="active-radio-2">Yes</label>
+                        </div>
+                        @if($errors->has('active'))
+                        <div class='text text-danger'>
+                            {{ $errors->first('active') }}
+                        </div>
+                        @endif
+                    </div>
 
                     <div class="form-group text-right">
                         <button type='submit' class="btn btn-primary">Save</button>
