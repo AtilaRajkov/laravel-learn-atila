@@ -49,7 +49,7 @@
                         <i class="fas fa-fw fa-file"></i>
                         <span>Pages</span>
                     </a>
-                    <div id="collapseTwo" class="{{ ( url()->current() == 'http://cms.learn.home/pages/create' || url()->current() == 'http://cms.learn.home/pages' ) ? 'collapse show' : 'collapse' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseTwo" class="{{ ( url()->current() == url(route('pages.index')) || url()->current() == url(route('pages.create')) ) ? 'collapse show' : 'collapse' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{ route('pages.index') }}">Preview all</a>
                             <a class="collapse-item" href="{{ route('pages.create') }}">Add new</a>
@@ -63,7 +63,7 @@
                         <i class="fas fa-fw fa-user"></i>
                         <span>Users</span>
                     </a>
-                    <div id="collapseUtilities" class="{{ ( url()->current() == 'http://cms.learn.home/users/create' || url()->current() == 'http://cms.learn.home/users' ) ? 'collapse show' : 'collapse' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div id="collapseUtilities" class="{{ ( url()->current() == url(route('users.index')) || url()->current() == url(route('users.create')) ) ? 'collapse show' : 'collapse' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{ route('users.index') }}">Preview all</a>
                             <a class="collapse-item" href="{{ route('users.create') }}">Add new</a>
