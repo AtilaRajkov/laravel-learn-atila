@@ -11,6 +11,7 @@
 @section('content')
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">{{ __('Create new page') }}</h1>
+@include('admin.layout.partials.messages')
 <div class='row'>
     <div class="offset-lg-2 col-lg-8">
         <!-- Basic Card Example -->

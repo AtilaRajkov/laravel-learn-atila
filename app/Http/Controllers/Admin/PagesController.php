@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Model\Page;
 
 class PagesController extends Controller {
+   
+   public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('isadmin')->only(['create', 'store']);
+    }
 
    /**
     * Display a listing of the resource.
@@ -72,13 +77,17 @@ class PagesController extends Controller {
          
          $newPage->save();
          
+         session()->flash('message-type', 'success');
+         session()->flash('message-text', 'Successfully created a new page!!!');
+         
+//         return redirect( route('pages.create') );
          return back();
       }
 
-      //session()->flash('message-type', 'success');
-      //session()->flash('message-text', 'Successfully created a new page!!!');
+      session()->flash('message-type', 'danger');
+      session()->flash('message-text', 'An error occurred!');
 
-
+      return back();
       //return redirect()->route('pages.index');
    }
 
