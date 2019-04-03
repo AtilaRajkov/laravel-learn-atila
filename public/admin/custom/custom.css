@@ -1,3 +1,14 @@
 .bg-login-image {
     background: url('https://cubes.edu.rs/templates/frontend/img/logo.png') no-repeat 50% 50%;
 }
+
+
+.sidebar .nav-item .collapse .collapse-inner .collapse-item:hover, .sidebar .nav-item .collapsing .collapse-inner .collapse-item:hover {
+    /*background-color: #eaecf4;*/
+    /*background-color: blue !important;*/
+}
+
+.selected-navbar-custom {
+    background-color: #3259CA !important;
+    color: white !important;
+}
