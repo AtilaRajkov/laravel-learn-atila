@@ -28,7 +28,7 @@ Route::any('/users/{user}/changepassword', 'Admin\UsersController@changepassword
 // USERS MODUL END
 
 // PAGES MODUL START
-Route::get('/pages/{page?}', 'Admin\PagesController@index')->name('pages.index');
+Route::get('/pages', 'Admin\PagesController@index')->name('pages.index');
 Route::get('/pages/create', 'Admin\PagesController@create')->name('pages.create');
 Route::post('/pages/store', 'Admin\PagesController@store')->name('pages.store');
 
