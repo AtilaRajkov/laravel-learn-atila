@@ -6,9 +6,11 @@
 .sidebar .nav-item .collapse .collapse-inner .collapse-item:hover, .sidebar .nav-item .collapsing .collapse-inner .collapse-item:hover {
     /*background-color: #eaecf4;*/
     /*background-color: blue !important;*/
+    color: gray;
 }
 
 .selected-navbar-custom {
-    background-color: #3259CA !important;
+    background-color: #3259CA;
     color: white !important;
+    opacity: 0.7;
 }

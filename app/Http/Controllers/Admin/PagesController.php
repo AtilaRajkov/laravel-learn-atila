@@ -40,10 +40,10 @@ class PagesController extends Controller {
    public function store(Request $request) {
       // Validacija:
       request()->validate([
-          'title' => 'required|string|min:5|max:191',
-          'description' => 'required|string|min:20|max:255',
+          'title' => 'required|string|min:3|max:191',
+          'description' => 'required|string|min:3|max:191',
           'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-          'content' => 'required|string|min:20|max:16000000',
+          'content' => 'required|string|min:3|max:65000',
           'layout' => 'required|string|in:fullwidth,leftaside,rightaside',
           'contact_form' => 'required|in:0,1',
           'header' => 'required|in:0,1',
@@ -70,7 +70,7 @@ class PagesController extends Controller {
          
          $image = $request->file('image');
          $name = time() . '.' . $image->getClientOriginalExtension();
-         $destinationPath = public_path($storage_folder );
+         $destinationPath = public_path($storage_folder);
          $image->move($destinationPath, $name);
          
          $newPage->image = $storage_folder . '/' . $name;
