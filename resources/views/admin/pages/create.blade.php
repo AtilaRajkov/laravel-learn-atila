@@ -22,6 +22,29 @@
             <div class="card-body">
                 <form action="{{ route('pages.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    
+                    <!--PAGE LEVEL-->
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-form-label col-sm-2 pt-2">Parent page *</label>
+                            <div class="col-sm-3">
+                                <select name="page_id" class="form-control">
+                                    <option value='0'>Top level page</option>
+                                    @if (count($pagesTopLevel) > 0)
+                                       @foreach($pagesTopLevel as $value) 
+                                          <option value='{{ $value->id }}' {{ (old('page_id') == $value->id) ? 'selected' : '' }}>{{ $value->title }}</option>
+                                       @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        @if($errors->has('page_id'))
+                        <div class='text text-danger'>
+                            {{ $errors->first('page_id') }}
+                        </div>
+                        @endif
+                    </div>
+                    
                     <!--TITLE-->
                     <div class="form-group">
                         <label>Title *</label>

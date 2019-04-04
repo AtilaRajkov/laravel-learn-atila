@@ -23,7 +23,7 @@ class PagesController extends Controller {
    public function index() {
       $rows = Page::all();
 
-      return $rows;
+      return view('admin.pages.index', compact('rows'));
    }
 
    /**
@@ -32,7 +32,10 @@ class PagesController extends Controller {
     * @return \Illuminate\Http\Response
     */
    public function create() {
-      return view('admin.pages.create');
+      $pagesTopLevel = Page::toplevel()
+              ->notdeleted()   
+              ->get();
+      return view('admin.pages.create', compact('pagesTopLevel'));
    }
 
    /**
@@ -43,7 +46,11 @@ class PagesController extends Controller {
     */
    public function store(Request $request) {
       // Validacija:
+      $pagesIds = Page::pluck('id')->all();
+      $pagesIds[] = 0;
+      $pagesIds = implode(',', $pagesIds);
       $data = request()->validate([
+          'page_id' => 'required|integer|in:' . $pagesIds,
           'title' => 'required|string|min:3|max:191|unique:pages',
           'description' => 'required|string|min:3|max:191',
           'image' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048',
@@ -127,8 +134,10 @@ class PagesController extends Controller {
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-   public function edit($id) {
-      //
+   public function edit(Page $page) {
+      // Fali checkPrivilegies!!!
+      
+      return view('admin.pages.edit', compact('page'));
    }
 
    /**

@@ -51,7 +51,7 @@
                     </a>
                     <div id="collapseTwo" class="{{ ( url()->current() == url(route('pages.index')) || url()->current() == url(route('pages.create')) ) ? 'collapse show' : 'collapse' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item {{ ( url()->current() == url(route('pages.index')) ) ? 'selected-navbar-custom' : '' }}">Preview all</a>
+                            <a class="collapse-item {{ ( url()->current() == url(route('pages.index')) ) ? 'selected-navbar-custom' : '' }}" href="{{ route('pages.index') }}">Preview all</a>
                             <a class="collapse-item {{ ( url()->current() == url(route('pages.create')) ) ? 'selected-navbar-custom' : '' }}" href="{{ route('pages.create') }}">Add new</a>
                         </div>
                     </div>
