@@ -20,10 +20,15 @@ class PagesController extends Controller {
     *
     * @return \Illuminate\Http\Response
     */
-   public function index() {
-      $rows = Page::all();
+   public function index(Page $page = null) {
 
-      return view('admin.pages.index', compact(['rows']));
+      if (!empty($page)) {
+         $rows = Page::where('page_id', $page->id)->get();
+      } else {
+         $rows = Page::where('page_id', '0')->get();
+      }
+      
+      return view('admin.pages.index', compact(['rows', 'page']));
    }
 
    /**
@@ -36,7 +41,7 @@ class PagesController extends Controller {
 //              ->notdeleted()   
 //              ->get();
       $pagesTopLevel = $this->pagesTopLevel();
-      
+
       return view('admin.pages.create', compact('pagesTopLevel'));
    }
 
@@ -94,7 +99,7 @@ class PagesController extends Controller {
          });
          $fileNameXL = '/upload/pages/' . config('app.seo-image-prefiks') . Str::slug(request('title'), '-') . '-' . Str::slug(now(), '-') . '-XL.' . $fileExtension;
          $interventionImage->save(public_path($fileNameXL));
-         
+
          // m velicicina
          $interventionImage = Image::make(public_path('/upload/pages/') . $fileName);
          $interventionImage->resize(800, null, function ($constraint) {
@@ -102,7 +107,7 @@ class PagesController extends Controller {
          });
          $fileNameM = '/upload/pages/' . config('app.seo-image-prefiks') . Str::slug(request('title'), '-') . '-' . Str::slug(now(), '-') . '-m.' . $fileExtension;
          $interventionImage->save(public_path($fileNameM));
-         
+
          // s velicicina
          $interventionImage = Image::make(public_path('/upload/pages/') . $fileName);
          $interventionImage->resize(300, null, function ($constraint) {
@@ -152,12 +157,10 @@ class PagesController extends Controller {
     */
    public function update(Page $page) {
       // Fali checkPrivilegies!!!
-      
-      
       // Validacija:
       // // Mislim da moze i ovako:
 //      $pagesIds = Page::whereNotIn('id', [$page->id])->pluck('id')->all();
-      
+
       $pagesIds = Page::where('id', '<>', [$page->id])->pluck('id')->all();
 //      return $pagesIds;
 //      die();
@@ -206,7 +209,7 @@ class PagesController extends Controller {
          });
          $fileNameXL = '/upload/pages/' . config('app.seo-image-prefiks') . Str::slug(request('title'), '-') . '-' . Str::slug(now(), '-') . '-XL.' . $fileExtension;
          $interventionImage->save(public_path($fileNameXL));
-         
+
          // m velicicina
          $interventionImage = Image::make(public_path('/upload/pages/') . $fileName);
          $interventionImage->resize(800, null, function ($constraint) {
@@ -214,7 +217,7 @@ class PagesController extends Controller {
          });
          $fileNameM = '/upload/pages/' . config('app.seo-image-prefiks') . Str::slug(request('title'), '-') . '-' . Str::slug(now(), '-') . '-m.' . $fileExtension;
          $interventionImage->save(public_path($fileNameM));
-         
+
          // s velicicina
          $interventionImage = Image::make(public_path('/upload/pages/') . $fileName);
          $interventionImage->resize(300, null, function ($constraint) {
@@ -230,7 +233,6 @@ class PagesController extends Controller {
       session()->flash('message-text', 'Successfully edited page' . $row->title . '!');
 
       return redirect()->route('pages.index');
-      
    }
 
    /**
@@ -242,26 +244,26 @@ class PagesController extends Controller {
    public function destroy($id) {
       //
    }
-   
-   public function changestatus(Page $page){
-        if($page->active == 1){
-            $page->active = 0;
-        } else {
-            $page->active = 1;
-        }
-        
-        $page->save();
-        
-        session()->flash('message-type', 'success');
-        session()->flash('message-text', 'Successfully changed status for the page :<b>' . $page->title . '</b>!');
-        
-        return redirect()->route('pages.index');
-        
-    }
-   
+
+   public function changestatus(Page $page) {
+      if ($page->active == 1) {
+         $page->active = 0;
+      } else {
+         $page->active = 1;
+      }
+
+      $page->save();
+
+      session()->flash('message-type', 'success');
+      session()->flash('message-text', 'Successfully changed status for the page :' . $page->title . '!');
+
+      //return redirect()->route('pages.index');
+      return back();
+   }
+
    protected function pagesTopLevel() {
       return $pagesTopLevel = Page::toplevel()
-              ->notdeleted()   
+              ->notdeleted()
               ->get();
    }
 

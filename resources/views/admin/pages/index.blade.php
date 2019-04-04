@@ -44,6 +44,7 @@
                             @endif
                         </td>
                         <td class="text-center text-white">
+                            <a data-placement="top" title='List all the subpages' href='{{ route("pages.index", ["page" => $value->id]) }}' class="btn btn-sm btn-warning tooltip-custom {{ ($value->page_id !== 0) ? 'invisible' : '' }}">{{ __('Subpages') }}</a>
                             <a data-placement="top" title='Edit page' href='{{ route("pages.edit", ["page" => $value->id]) }}' class="btn btn-sm btn-primary tooltip-custom">{{ __('Edit') }}</a>
                             <a data-placement="top" title='Preview page' href='#' class="btn btn-sm btn-success tooltip-custom"><i class="fas fa-eye fa-sm fa-fw"></i></a>
                             <a data-placement="top" title='Delete page {{ $value->title }}' data-name='{{ $value->title }}' data-toggle="modal" data-target="#deleteModal" data-href='{{ route("pages.delete", ["page" => $value->id]) }}' class="btn btn-sm btn-danger tooltip-custom">{{ __('Delete') }}</a>
