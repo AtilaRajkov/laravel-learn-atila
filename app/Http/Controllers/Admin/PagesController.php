@@ -20,14 +20,20 @@ class PagesController extends Controller {
     *
     * @return \Illuminate\Http\Response
     */
-   public function index(Page $page = null) {
+   public function index(Page $page = NULL) {
 
-      if (!empty($page)) {
-         $rows = Page::where('page_id', $page->id)->get();
+      // level 0 - toplevel
+      if (is_null($page)) {
+         $pageId = 0;
       } else {
-         $rows = Page::where('page_id', '0')->get();
+         // subpages
+         $pageId = $page->id;
       }
-      
+
+      $rows = Page::notdeleted()
+              ->where('page_id', $pageId)
+              ->get();
+
       return view('admin.pages.index', compact(['rows', 'page']));
    }
 
@@ -37,10 +43,10 @@ class PagesController extends Controller {
     * @return \Illuminate\Http\Response
     */
    public function create() {
-//      $pagesTopLevel = Page::toplevel()
-//              ->notdeleted()   
-//              ->get();
-      $pagesTopLevel = $this->pagesTopLevel();
+      $pagesTopLevel = Page::toplevel()
+              ->notdeleted()
+              ->get();
+//      $pagesTopLevel = $this->pagesTopLevel();
 
       return view('admin.pages.create', compact('pagesTopLevel'));
    }
@@ -143,8 +149,10 @@ class PagesController extends Controller {
     */
    public function edit(Page $page) {
       // Fali checkPrivilegies!!!
-      $pagesTopLevel = $this->pagesTopLevel();
-
+      $pagesTopLevel = Page::toplevel()
+              ->notdeleted()
+              ->where('id', '!=', $page->id)
+              ->get();
       return view('admin.pages.edit', compact(['page', 'pagesTopLevel']));
    }
 
@@ -161,7 +169,9 @@ class PagesController extends Controller {
       // // Mislim da moze i ovako:
 //      $pagesIds = Page::whereNotIn('id', [$page->id])->pluck('id')->all();
 
-      $pagesIds = Page::where('id', '<>', [$page->id])->pluck('id')->all();
+      $pagesIds = Page::where('id', '<>', [$page->id])
+              ->pluck('id')
+              ->all();
 //      return $pagesIds;
 //      die();
       $pagesIds[] = 0;
@@ -235,16 +245,6 @@ class PagesController extends Controller {
       return redirect()->route('pages.index');
    }
 
-   /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-   public function destroy($id) {
-      //
-   }
-
    public function changestatus(Page $page) {
       if ($page->active == 1) {
          $page->active = 0;
@@ -255,10 +255,26 @@ class PagesController extends Controller {
       $page->save();
 
       session()->flash('message-type', 'success');
-      session()->flash('message-text', 'Successfully changed status for the page :' . $page->title . '!');
+      session()->flash('message-text', 'Successfully changed status for the page: ' . $page->title . '!');
 
       //return redirect()->route('pages.index');
       return back();
+   }
+
+   public function delete(Page $page) {
+
+      // hard delete
+      //$user->delete();
+      // soft delete
+      $page->deleted = 1;
+      $page->deleted_by = auth()->user()->id;
+      $page->deleted_at = now();
+      $page->save();
+
+      session()->flash('message-type', 'success');
+      session()->flash('message-text', 'Successfully deelted page: ' . $page->title . '!');
+
+      return redirect()->route('pages.index');
    }
 
    protected function pagesTopLevel() {

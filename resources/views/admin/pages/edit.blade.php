@@ -1,7 +1,7 @@
 @extends('admin.layout.main')
 
 @section('seo-title')
-<title>{{ __('Edit page') }} {{ config('app.seo-separator') }} {{ config('app.name') }}</title>
+<title>{{ __('Edit page') }} {{ $page->title }} {{ config('app.seo-separator') }} {{ config('app.name') }}</title>
 @endsection
 
 @section('custom-css')
@@ -10,14 +10,14 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-4 text-gray-800">{{ __('Edit new page') }}</h1>
+<h1 class="h3 mb-4 text-gray-800">{{ __('Edit page') }} {{ $page->title }}</h1>
 @include('admin.layout.partials.messages')
 <div class='row'>
     <div class="offset-lg-2 col-lg-8">
         <!-- Basic Card Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ __('Edit page details') }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ __('Current page details') }}</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('pages.update', ['page' => $page->id]) }}" method="post" enctype="multipart/form-data">
@@ -68,16 +68,24 @@
                         </div>
                         @endif
                     </div>
+                    
+                    @if(isset($page->image) && !empty($page->image))
+                    <div>
+                        <label>Current image</label>
+                        <img class="w-100 mb-3" src="{{ $page->getImage('m') }}">
+                    </div>
+                    <br>
+                    @endif
 
                     <!--MOJ IMAGE-->
                     <div class="custom-file">
                         <input type="file" name='image' class="custom-file-input" id="image-upload">
-                        <label class="custom-file-label" for="image-upload">Image *</label>
-<!--                        @if($errors->has('image'))
+                        <label class="custom-file-label" for="image-upload">New Image</label>
+                        @if($errors->has('image'))
                         <div class='text text-danger'>
                             {{ $errors->first('image') }}
                         </div>
-                        @endif-->
+                        @endif
                     </div>
                     <br>
                     <br>
