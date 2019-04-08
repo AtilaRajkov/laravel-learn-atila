@@ -7,25 +7,27 @@
                 <div class="col-md-3">
                     <div class="c-container c-first">
                         <div class="c-content-title-1">
-                            <h3 class="c-font-uppercase c-font-bold c-font-white">JAN
-                                <span class="c-theme-font">GO</span>
+                            <h3 class="c-font-uppercase c-font-bold c-font-white">
+                                KURS<span class="c-theme-font">EVI</span>
                             </h3>
                             <div class="c-line-left hide"></div>
-                            <p class="c-text"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, s ed elit diam nonummy ad minim veniam quis nostrud exerci et tation diam.</p>
                         </div>
                         <ul class="c-links">
-                            <li>
-                                <a href="#">Home</a>
-                            </li>
-                            <li>
-                                <a href="#">About</a>
-                            </li>
-                            <li>
-                                <a href="#">Terms</a>
-                            </li>
-                            <li>
-                                <a href="#">Contact</a>
-                            </li>
+                            
+                            @if( count($kurseviFooter) >0 ) 
+                              @foreach($kurseviFooter as $kurs)
+                                 @if(count($kurs->pages) >0)
+                                    @foreach($kurs->pages as $kurs2)
+                                    <li>
+                                        <a href="{{ route( 'pages.show', ['page' => $kurs2->id, 'slug' => Str::slug($kurs2->title, '-') ] ) }}">{{ $kurs2->title }}</a>
+                                    </li>
+                                    @endforeach
+                                 @endif()
+                                 
+                              @endforeach
+                            @endif
+                            
+                           
                         </ul>
                     </div>
                 </div>

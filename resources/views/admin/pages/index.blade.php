@@ -20,7 +20,7 @@
         <h6 class="m-0 font-weight-bold text-primary">
             <a href="{{ route('pages.index') }}">Root</a>
             @if(!is_null($page))
-            {{ $page->breadcrumbs() }}
+            {{ breadcrumbs($page) }}
             @endif
         </h6>
     </div>
@@ -40,7 +40,9 @@
                     @foreach($rows as $value)
                     <tr>
                         <td>
-                            <img src="{{ $value->getImage('s') }}">
+                            
+                            <!--HELPER-->
+                            <img src="{{ getImage($value, 's') }}">
                         </td>
                         <td>
                             {{ $value->title }}

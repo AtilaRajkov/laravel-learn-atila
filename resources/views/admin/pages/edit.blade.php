@@ -72,7 +72,7 @@
                     @if(isset($page->image) && !empty($page->image))
                     <div>
                         <label>Current image</label>
-                        <img class="w-100 mb-3" src="{{ $page->getImage('m') }}">
+                        <img class="w-100 mb-3" src="{{ getImage($page, 'm') }}">
                     </div>
                     <br>
                     @endif

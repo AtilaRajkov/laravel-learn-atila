@@ -42,5 +42,9 @@ class AppServiceProvider extends ServiceProvider
 //            $view->with('pagesTopLevel', $pagesTopLevel);
 //         });
         
+        $kurseviFooter = Page::notdeleted()
+                     ->kursevi()
+                    ->get();
+        view()->share('kurseviFooter', $kurseviFooter);
     }
 }
